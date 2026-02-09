@@ -97,6 +97,10 @@
   margin-bottom: 16px;
 }
 
+.duplicate-progress.is-hidden {
+  display: none;
+}
+
 .duplicate-progress-bar {
   height: 4px;
   background: var(--background-modifier-border);

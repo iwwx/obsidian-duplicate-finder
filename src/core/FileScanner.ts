@@ -1,4 +1,4 @@
-import { App, TFile, Vault } from 'obsidian';
+import { App, TFile } from 'obsidian';
 import { FileInfo, DuplicateFinderSettings, ScanProgressCallback } from '../types';
 
 /**

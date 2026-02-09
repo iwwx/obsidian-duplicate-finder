@@ -1,6 +1,6 @@
 export const enUS = {
   // Common
-  'common.duplicate': 'Duplicate Notes',
+  'common.duplicate': 'Duplicate notes',
   'common.scan': 'Scan',
   'common.open': 'Open',
   'common.delete': 'Delete',
@@ -11,7 +11,7 @@ export const enUS = {
   'common.properties': 'Properties',
 
   // View
-  'view.title': 'Duplicate Note Detection',
+  'view.title': 'Duplicate note detection',
   'view.emptyPrompt': 'Click "Scan" to detect duplicate notes',
   'view.noDuplicates': 'No duplicate notes found 🎉',
   'view.foundGroups': 'Found {count} duplicate groups',
@@ -23,22 +23,22 @@ export const enUS = {
   'scan.failed': 'Scan failed, please check console',
 
   // Duplicate types
-  'type.exactcontent': 'Exact Content',
-  'type.exacttitle': 'Exact Title',
-  'type.similarcontent': 'Similar Content',
+  'type.exactcontent': 'Exact content',
+  'type.exacttitle': 'Exact title',
+  'type.similarcontent': 'Similar content',
 
   // Compare preview
-  'compare.title': 'Compare Notes ({count} files)',
+  'compare.title': 'Compare notes ({count} files)',
   'compare.properties': 'Properties',
   'compare.stats': 'Words: {words} | Characters: {chars}',
 
   // Actions
-  'action.undo': 'Undo Delete',
-  'action.redo': 'Redo Delete',
+  'action.undo': 'Undo delete',
+  'action.redo': 'Redo delete',
   'action.close': 'Close',
   'action.open': 'Open',
   'action.delete': 'Delete',
-  'action.compare': 'Compare Preview ({count} files)',
+  'action.compare': 'Compare preview ({count} files)',
 
   // Messages
   'message.deleted': 'Deleted: {file}',
@@ -50,20 +50,20 @@ export const enUS = {
   'message.scanFailed': 'Scan failed, please check console',
 
   // Settings
-  'settings.title': 'Duplicate Note Detection Settings',
+  'settings.title': 'Duplicate note detection settings',
   'settings.language': 'Language',
   'settings.languageDesc': 'Select plugin display language',
-  'settings.similarityThreshold': 'Similarity Threshold',
+  'settings.similarityThreshold': 'Similarity threshold',
   'settings.similarityThresholdDesc': 'Content similarity percentage to be considered duplicate (0-100)',
-  'settings.minContentLength': 'Minimum Content Length',
+  'settings.minContentLength': 'Minimum content length',
   'settings.minContentLengthDesc': 'Notes with fewer characters than this will be ignored',
-  'settings.excludedFolders': 'Excluded Folders',
+  'settings.excludedFolders': 'Excluded folders',
   'settings.excludedFoldersDesc': 'List of folders to exclude from scanning, one per line',
 
   // Commands
-  'command.openFinder': 'Open Duplicate Note Detection',
-  'command.scanDuplicates': 'Scan for Duplicate Notes',
+  'command.openFinder': 'Open duplicate note detection',
+  'command.scanDuplicates': 'Scan for duplicate notes',
 
   // Ribbon
-  'ribbon.tooltip': 'Duplicate Note Detection',
+  'ribbon.tooltip': 'Duplicate note detection',
 };

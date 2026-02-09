@@ -47,7 +47,7 @@ export class SimilarityCalculator {
       .replace(/!\[[^\]]*\]\([^)]*\)/g, '') // 本地图片
       .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1') // 普通链接（保留文本）
       .replace(/^#+\s*/gm, '') // 标题
-      .replace(/[#*_~`\[\]()]/g, '') // Markdown 符号
+      .replace(/[#*_~`[\]()]/g, '') // Markdown 符号
       .toLowerCase();
 
     const tokens = new Set<string>();

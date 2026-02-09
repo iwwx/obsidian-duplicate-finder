@@ -11,7 +11,7 @@ export const VIEW_TYPE_DUPLICATE = 'duplicate-finder-view';
 export const DEFAULT_SETTINGS: DuplicateFinderSettings = {
   language: 'en-us', // 将在插件加载时自动检测
   similarityThreshold: 80,
-  excludedFolders: ['.obsidian', '.trash', 'templates'],
+  excludedFolders: ['.trash', 'templates'],
   minContentLength: 50,
 };
 

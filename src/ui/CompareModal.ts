@@ -70,7 +70,7 @@ export class CompareModal extends Modal {
   /**
    * 渲染 frontmatter 属性表格
    */
-  private renderFrontmatter(container: HTMLElement, frontmatter: Record<string, any>): void {
+  private renderFrontmatter(container: HTMLElement, frontmatter: Record<string, unknown>): void {
     const propsContainer = container.createDiv({ cls: 'compare-properties' });
     propsContainer.createEl('div', { cls: 'compare-properties-title', text: this.plugin.i18n.t('compare.properties') });
 
@@ -131,7 +131,7 @@ export class CompareModal extends Modal {
       cls: 'mod-cta',
     });
     openBtn.addEventListener('click', () => {
-      this.app.workspace.openLinkText(file.path, '', false);
+      void this.app.workspace.openLinkText(file.path, '', false);
       this.close();
     });
 
@@ -139,7 +139,7 @@ export class CompareModal extends Modal {
       text: this.plugin.i18n.t('action.delete'),
       cls: 'mod-warning',
     });
-    deleteBtn.addEventListener('click', () => this.deleteFile(file));
+    deleteBtn.addEventListener('click', () => void this.deleteFile(file));
 
     // 内容预览
     const content = panel.createDiv({ cls: 'compare-content markdown-rendered' });
@@ -149,8 +149,8 @@ export class CompareModal extends Modal {
 
     // 渲染 frontmatter 属性
     if (metadata?.frontmatter) {
-      // 过滤掉内部属性（以 position 结尾的）
-      const displayProps: Record<string, any> = {};
+      // 过滤掉内部属性(以 position 结尾的)
+      const displayProps: Record<string, unknown> = {};
       for (const [key, value] of Object.entries(metadata.frontmatter)) {
         if (!key.endsWith('position')) {
           displayProps[key] = value;
@@ -166,7 +166,7 @@ export class CompareModal extends Modal {
     const body = this.removeFrontmatter(file.content);
 
     // 渲染 Markdown 内容
-    MarkdownRenderer.render(
+    void MarkdownRenderer.render(
       this.app,
       body,
       content,
@@ -176,12 +176,12 @@ export class CompareModal extends Modal {
   }
 
   /**
-   * 删除文件（无确认）
+   * 删除文件(无确认)
    */
   private async deleteFile(file: FileInfo): Promise<void> {
     try {
       // 移动到回收站
-      await this.app.vault.trash(file.file, true);
+      await this.app.fileManager.trashFile(file.file);
 
       // 从列表中移除
       this.files = this.files.filter((f) => f.path !== file.path);
@@ -191,7 +191,7 @@ export class CompareModal extends Modal {
 
       new Notice(this.plugin.i18n.t('message.deleted', { file: file.basename }));
 
-      // 如果没有文件了，关闭模态框
+      // 如果没有文件了,关闭模态框
       if (this.files.length === 0) {
         this.close();
         return;

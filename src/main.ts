@@ -54,20 +54,20 @@ export default class DuplicateFinderPlugin extends Plugin {
 
     // 添加 Ribbon 图标
     this.addRibbonIcon('duplicate-trash', this.i18n.t('ribbon.tooltip'), () => {
-      this.activateView();
+      void this.activateView();
     });
 
     // 添加命令
     this.addCommand({
-      id: 'open-duplicate-finder',
+      id: 'open-finder',
       name: this.i18n.t('command.openFinder'),
       callback: () => {
-        this.activateView();
+        void this.activateView();
       },
     });
 
     this.addCommand({
-      id: 'scan-duplicates',
+      id: 'scan',
       name: this.i18n.t('command.scanDuplicates'),
       callback: async () => {
         await this.activateView();
@@ -87,13 +87,18 @@ export default class DuplicateFinderPlugin extends Plugin {
   }
 
   onunload(): void {
-    // 清理视图
-    this.app.workspace.detachLeavesOfType(VIEW_TYPE_DUPLICATE);
+    // 插件卸载时的清理工作
   }
 
   async loadSettings(): Promise<void> {
     const data = await this.loadData();
     this.settings = Object.assign({}, DEFAULT_SETTINGS, data);
+
+    // 自动将配置目录添加到排除列表(如果不存在)
+    const configDir = this.app.vault.configDir;
+    if (!this.settings.excludedFolders.includes(configDir)) {
+      this.settings.excludedFolders.unshift(configDir);
+    }
 
     // 如果没有设置语言，自动检测
     if (!this.settings.language) {
@@ -112,7 +117,7 @@ export default class DuplicateFinderPlugin extends Plugin {
     const view = this.getView();
     if (view) {
       view.updateSettings();
-      view.onOpen(); // 重新渲染以应用新语言
+      void view.onOpen(); // 重新渲染以应用新语言
     }
   }
 

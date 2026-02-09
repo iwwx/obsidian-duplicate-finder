@@ -1,5 +1,4 @@
 import {
-  App,
   ItemView,
   WorkspaceLeaf,
   Notice,
@@ -10,6 +9,7 @@ import { VIEW_TYPE_DUPLICATE } from '../constants';
 import { DuplicateDetector } from '../core/DuplicateDetector';
 import { CompareModal } from './CompareModal';
 import type DuplicateFinderPlugin from '../main';
+import type { TranslationKey } from '../i18n';
 
 interface DeleteAction {
   file: FileInfo;
@@ -47,7 +47,7 @@ export class DuplicateView extends ItemView {
     return 'copy';
   }
 
-  async onOpen(): Promise<void> {
+  onOpen(): void {
     const container = this.containerEl.children[1];
     container.empty();
     container.addClass('duplicate-finder-view');
@@ -67,7 +67,7 @@ export class DuplicateView extends ItemView {
       attr: { 'aria-label': this.plugin.i18n.t('action.undo') },
     });
     setIcon(undoBtn, 'undo');
-    undoBtn.addEventListener('click', () => this.undo());
+    undoBtn.addEventListener('click', () => void this.undo());
 
     // 重做按钮
     const redoBtn = headerActions.createEl('button', {
@@ -75,7 +75,7 @@ export class DuplicateView extends ItemView {
       attr: { 'aria-label': this.plugin.i18n.t('action.redo') },
     });
     setIcon(redoBtn, 'redo');
-    redoBtn.addEventListener('click', () => this.redo());
+    redoBtn.addEventListener('click', () => void this.redo());
 
     // 扫描按钮
     const scanBtn = headerActions.createEl('button', {
@@ -83,7 +83,7 @@ export class DuplicateView extends ItemView {
     });
     setIcon(scanBtn, 'search');
     scanBtn.createSpan({ text: this.plugin.i18n.t('common.scan') });
-    scanBtn.addEventListener('click', () => this.startScan());
+    scanBtn.addEventListener('click', () => void this.startScan());
 
     // 关闭按钮
     const closeBtn = headerActions.createEl('button', {
@@ -95,9 +95,8 @@ export class DuplicateView extends ItemView {
 
     // 进度条
     const progressContainer = container.createDiv({
-      cls: 'duplicate-progress',
+      cls: 'duplicate-progress is-hidden',
     });
-    progressContainer.style.display = 'none';
     const progressBar = progressContainer.createDiv({
       cls: 'duplicate-progress-bar',
     });
@@ -201,7 +200,7 @@ export class DuplicateView extends ItemView {
       const file = group?.files.find((f) => f.path === action.file.path);
 
       if (file && group) {
-        await this.app.vault.trash(file.file, true);
+        await this.app.fileManager.trashFile(file.file);
 
         this.deleteHistory.push({
           file,
@@ -254,7 +253,7 @@ export class DuplicateView extends ItemView {
       '.duplicate-scan-btn'
     ) as HTMLButtonElement;
 
-    progressContainer.style.display = 'block';
+    progressContainer.classList.remove('is-hidden');
     scanBtn.disabled = true;
 
     try {
@@ -277,7 +276,7 @@ export class DuplicateView extends ItemView {
       new Notice(this.plugin.i18n.t('message.scanFailed'));
     } finally {
       this.isScanning = false;
-      progressContainer.style.display = 'none';
+      progressContainer.classList.add('is-hidden');
       scanBtn.disabled = false;
     }
   }
@@ -334,7 +333,7 @@ export class DuplicateView extends ItemView {
    * 获取重复类型的本地化标签
    */
   private getDuplicateTypeLabel(type: string): string {
-    const typeKey = `type.${type.replace(/_/g, '')}` as any;
+    const typeKey = `type.${type.replace(/_/g, '')}` as TranslationKey;
     return this.plugin.i18n.t(typeKey);
   }
 
@@ -425,7 +424,7 @@ export class DuplicateView extends ItemView {
       text: file.basename,
     });
     fileName.addEventListener('click', () => {
-      this.app.workspace.openLinkText(file.path, '', false);
+      void this.app.workspace.openLinkText(file.path, '', false);
     });
 
     fileInfo.createEl('span', {
@@ -442,7 +441,7 @@ export class DuplicateView extends ItemView {
     });
     setIcon(openBtn, 'file-text');
     openBtn.addEventListener('click', () => {
-      this.app.workspace.openLinkText(file.path, '', false);
+      void this.app.workspace.openLinkText(file.path, '', false);
     });
 
     const deleteBtn = actions.createEl('button', {
@@ -450,7 +449,7 @@ export class DuplicateView extends ItemView {
       attr: { 'aria-label': this.plugin.i18n.t('action.delete') },
     });
     setIcon(deleteBtn, 'trash');
-    deleteBtn.addEventListener('click', () => this.deleteFile(file, group));
+    deleteBtn.addEventListener('click', () => void this.deleteFile(file, group));
   }
 
   /**
@@ -469,7 +468,7 @@ export class DuplicateView extends ItemView {
       });
       this.redoStack = [];
 
-      await this.app.vault.trash(file.file, true);
+      await this.app.fileManager.trashFile(file.file);
       new Notice(this.plugin.i18n.t('message.deleted', { file: file.basename }));
 
       // 从组中移除

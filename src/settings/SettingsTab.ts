@@ -1,6 +1,6 @@
 import { App, PluginSettingTab, Setting } from 'obsidian';
 import type DuplicateFinderPlugin from '../main';
-import { SUPPORTED_LANGUAGES } from '../i18n';
+import { SUPPORTED_LANGUAGES, type Language } from '../i18n';
 
 export class DuplicateFinderSettingTab extends PluginSettingTab {
   plugin: DuplicateFinderPlugin;
@@ -16,7 +16,10 @@ export class DuplicateFinderSettingTab extends PluginSettingTab {
 
     containerEl.empty();
 
-    containerEl.createEl('h2', { text: i18n.t('settings.title') });
+    // 标题
+    new Setting(containerEl)
+      .setName(i18n.t('settings.title'))
+      .setHeading();
 
     // 语言设置
     new Setting(containerEl)
@@ -27,7 +30,7 @@ export class DuplicateFinderSettingTab extends PluginSettingTab {
           .addOptions(SUPPORTED_LANGUAGES)
           .setValue(this.plugin.settings.language)
           .onChange(async (value) => {
-            this.plugin.settings.language = value as any;
+            this.plugin.settings.language = value as Language;
             await this.plugin.saveSettings();
             this.display(); // 重新渲染设置页面以应用新语言
           })
@@ -71,7 +74,7 @@ export class DuplicateFinderSettingTab extends PluginSettingTab {
       .setDesc(i18n.t('settings.excludedFoldersDesc'))
       .addTextArea((text) =>
         text
-          .setPlaceholder('.obsidian\n.trash\ntemplates')
+          .setPlaceholder(`${this.app.vault.configDir}\n.trash\ntemplates`)
           .setValue(this.plugin.settings.excludedFolders.join('\n'))
           .onChange(async (value) => {
             this.plugin.settings.excludedFolders = value
