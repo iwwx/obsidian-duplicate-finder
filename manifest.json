@@ -1,0 +1,10 @@
+{
+  "id": "duplicate-finder",
+  "name": "Duplicate Note Finder",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Detect duplicate notes in your vault by title, exact content, or similarity. Features side-by-side comparison, undo/redo, and multi-language support.",
+  "author": "Zach",
+  "authorUrl": "https://github.com/iwwx",
+  "isDesktopOnly": false
+}

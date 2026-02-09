@@ -1,0 +1,33 @@
+# Node modules
+node_modules/
+
+# Build output
+main.js
+*.js.map
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Obsidian
+.obsidian/
+
+# Development
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Spec workflow
+.spec-workflow/
