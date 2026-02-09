@@ -89,7 +89,7 @@ export class CompareModal extends Modal {
           tag.textContent = String(item);
         }
       } else if (value != null) {
-        valueCell.textContent = String(value);
+        valueCell.textContent = typeof value === 'object' ? JSON.stringify(value) : String(value);
       }
     }
   }

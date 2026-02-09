@@ -12,7 +12,7 @@ export const enUS = {
 
   // View
   'view.title': 'Duplicate note detection',
-  'view.emptyPrompt': 'Click "Scan" to detect duplicate notes',
+  'view.emptyPrompt': 'Click "scan" to detect duplicate notes',
   'view.noDuplicates': 'No duplicate notes found 🎉',
   'view.foundGroups': 'Found {count} duplicate groups',
 
