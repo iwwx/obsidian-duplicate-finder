@@ -106,7 +106,7 @@ git push -u origin main
 {
   "id": "duplicate-finder",
   "name": "Duplicate Note Finder",
-  "author": "Zach",
+  "author": "Buyan",
   "description": "Detect duplicate notes in your vault by title, exact content, or similarity. Features side-by-side comparison, undo/redo, and multi-language support.",
   "repo": "iwwx/obsidian-duplicate-finder"
 }
