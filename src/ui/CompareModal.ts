@@ -68,6 +68,19 @@ export class CompareModal extends Modal {
   }
 
   /**
+   * 将值转换为字符串用于显示
+   */
+  private valueToString(value: unknown): string {
+    if (value == null) {
+      return '';
+    }
+    if (typeof value === 'object') {
+      return JSON.stringify(value);
+    }
+    return String(value);
+  }
+
+  /**
    * 渲染 frontmatter 属性表格
    */
   private renderFrontmatter(container: HTMLElement, frontmatter: Record<string, unknown>): void {
@@ -86,14 +99,10 @@ export class CompareModal extends Modal {
         const tagsContainer = valueCell.createDiv({ cls: 'compare-prop-tags' });
         for (const item of value) {
           const tag = tagsContainer.createEl('span', { cls: 'compare-prop-tag' });
-          tag.textContent = typeof item === 'object' && item !== null
-            ? JSON.stringify(item)
-            : String(item);
+          tag.textContent = this.valueToString(item);
         }
-      } else if (typeof value === 'object' && value !== null) {
-        valueCell.textContent = JSON.stringify(value);
-      } else if (value != null) {
-        valueCell.textContent = String(value);
+      } else {
+        valueCell.textContent = this.valueToString(value);
       }
     }
   }
