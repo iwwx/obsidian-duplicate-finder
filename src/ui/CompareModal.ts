@@ -86,10 +86,14 @@ export class CompareModal extends Modal {
         const tagsContainer = valueCell.createDiv({ cls: 'compare-prop-tags' });
         for (const item of value) {
           const tag = tagsContainer.createEl('span', { cls: 'compare-prop-tag' });
-          tag.textContent = typeof item === 'object' ? JSON.stringify(item) : String(item);
+          tag.textContent = typeof item === 'object' && item !== null
+            ? JSON.stringify(item)
+            : String(item);
         }
+      } else if (typeof value === 'object' && value !== null) {
+        valueCell.textContent = JSON.stringify(value);
       } else if (value != null) {
-        valueCell.textContent = typeof value === 'object' ? JSON.stringify(value) : String(value);
+        valueCell.textContent = String(value);
       }
     }
   }
